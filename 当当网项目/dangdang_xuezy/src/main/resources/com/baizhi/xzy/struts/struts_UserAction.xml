@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<include file="com/baizhi/xzy/struts/struts_MainAction.xml" />
+	<package name="user" extends="struts-default" namespace="/user">
+ 		<!-- 登陆 -->
+		<!--<action name="login" class="com.baizhi.xzy.action.UserAction" method="login">
+			<result name="main" type="redirectAction">
+				<param name="namespace">/main</param>
+				<param name="actionName">findAllC</param>
+			</result>
+			<result name="login">/front/user/login_form.jsp</result>
+		</action> -->
+		<!-- 注册 -->
+		<action name="regist" class="com.baizhi.xzy.action.UserAction" method="regist">
+			<result name="regist" type="redirectAction">random</result>
+		</action>
+		<!-- 获取邮箱随机字符 -->
+		<action name="random" class="com.baizhi.xzy.action.UserAction" method="random">
+			<result name="random" type="redirect">/front/user/verify_form.jsp
+			</result>
+		</action>
+		<!-- 验证邮箱 -->
+		<action name="check" class="com.baizhi.xzy.action.UserAction" method="check">
+			<!-- 验证邮箱成功 -->
+			<result name="checkOk" type="redirect">/front/user/register_ok.jsp
+			</result>
+			<!-- 验证邮箱失败 -->
+			<result name="checkError" type="redirectAction">random</result>
+		</action>
+		<!-- 登陆 -->
+		<action name="loginAction" class="com.baizhi.xzy.action.UserAction" method="loginAction">
+			<!-- 跳转到邮箱激活页面 -->
+			<result name="Email" type="redirectAction">random</result>
+			<!-- 跳转到首页- -->
+			<result name="loginOK" type="redirectAction">
+				<param name="namespace">/main</param>
+				<param name="actionName">findAllC</param>
+			</result>
+			<!-- 跳转到登录页面 -->
+			<result name="loginError" >/front/user/login_form.jsp</result>
+		</action>
+		<!-- 退出 -->
+		<action name="exit" class="com.baizhi.xzy.action.UserAction" method="exit">
+			<result name="exit" type="redirectAction">
+				<param name="namespace">/main</param>
+				<param name="actionName">findAllC</param>
+			</result>
+		</action>
+		
+		<!-- 后台：查询所有用户 -->
+		<action name="findAllU" class="com.baizhi.xzy.action.UserAction" method="findAllU">
+			<result name="findAllU" >/back/user/show.jsp</result>
+		</action>
+		<!-- 后台：修改状态-->
+		<action name="updateS" class="com.baizhi.xzy.action.UserAction" method="updateS">
+			<result name="updateS"  type="redirectAction">findAllU</result>
+		</action>
+	</package>
+</struts>

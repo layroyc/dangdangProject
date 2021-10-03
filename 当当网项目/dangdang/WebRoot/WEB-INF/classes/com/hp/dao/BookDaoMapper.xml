@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.dao.BookDao">
+	<!-- 查询所有图书 -->
+	<select id="selectAll" resultType="Book">
+		select
+		id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book
+	</select>
+	<!-- 添加图书 -->
+	<insert id="addBook">
+		<!-- insert into m_book values(#{id},#{cate_id},#{book_name},#{page_number}, 
+			#{word_number},#{original_price},#{cover},#{discount_price}, #{repertory} 
+			,#{author},#{edit_recommend} , #{publish_company},to_date(#{publish_time},'yyyy-mm-dd'),#{prospectus},#{edition}, 
+			to_date(#{print_time},'yyyy-mm-dd'),#{author_intro},#{print_number},#{isbn},#{catalog}, 
+			#{book_size},#{paper_type},#{media_comment},#{pack_type},#{sales_volume} 
+			) -->
+		insert into m_book
+		values(#{id},#{cate_id},#{book_name},#{page_number},
+		#{word_number},#{original_price},#{cover},#{discount_price},
+		#{repertory} ,#{author},#{edit_recommend},
+		#{publish_company},#{publish_time},#{prospectus},#{edition},
+		#{print_time},#{author_intro},#{print_number},#{isbn},#{catalog},
+		#{book_size},#{paper_type},#{media_comment},#{pack_type},#{sales_volume}
+		)
+	</insert>
+	<!-- 模糊查询 根据书名 作者 出版社 -->
+	<select id="selectLikeB" resultType="Book">
+		select * from m_book
+		<where>
+			<if test="select=='book_name'">
+				book_name like '%'||#{name}||'%'
+			</if>
+			<if test="select=='author'">
+				author like '%'||#{name}||'%'
+			</if>
+			<if test="select=='publish_company'">
+				publish_company like '%'||#{name}||'%'
+			</if>
+		</where>
+	</select>
+	<!-- 删除图书 -->
+	<delete id="deleteB">
+		delete from m_book where id=#{id}
+	</delete>
+	<!-- 修改图书 -->
+	<update id="updateB" parameterType="Book">
+		update m_book
+		<set>
+			<if test="cate_id!=null">cate_id=#{cate_id},</if>
+			<if test="book_name!=null">book_name=#{book_name},</if>
+			<if test="page_number!=null">page_number=#{page_number},</if>
+			<if test="word_number!=null">word_number=#{word_number},</if>
+			<if test="original_price!=null">original_price=#{original_price},</if>
+			<if test="cover!=null">cover=#{cover},</if>
+			<if test="discount_price!=null">discount_price=#{discount_price},</if>
+			<if test="repertory!=null">repertory=#{repertory},</if>
+			<if test="author!=null">author=#{author},</if>
+			<if test="edit_recommend!=null">edit_recommend=#{edit_recommend},</if>
+			<if test="publish_company!=null">publish_company=#{publish_company},</if>
+			<if test="publish_time!=null">publish_time=#{publish_time},</if>
+			<if test="prospectus!=null">prospectus=#{prospectus},</if>
+			<if test="edition!=null">edition=#{edition},</if>
+			<if test="print_time!=null">print_time=#{print_time},</if>
+			<if test="author_intro!=null">author_intro=#{author_intro},</if>
+			<if test="print_number!=null">print_number=#{print_number},</if>
+			<if test="isbn!=null">isbn=#{isbn},</if>
+			<if test="catalog!=null">catalog=#{catalog},</if>
+			<if test="book_size!=null">book_size=#{book_size},</if>
+			<if test="paper_type!=null">paper_type=#{paper_type},</if>
+			<if test="media_comment!=null">media_comment=#{media_comment},</if>
+			<if test="pack_type!=null">pack_type=#{pack_type},</if>
+			<if test="sales_volume!=null">sales_volume=#{sales_volume}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 根据id查找图书 -->
+	<select id="findbyId" resultType="Book">
+		select
+		id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book where id=#{id}
+	</select>
+	
+	<!-- 前端 -->
+	<!-- 查询图书，随机展示两本 -->
+	<select id="selectAllB" resultType="Book">
+		<!-- select id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book sample(10) where rownum &lt; 3 -->
+		
+		<!-- select b.id,b.cate_id,b.book_name,b.page_number,b.word_number,b.original_price,b.cover,b.discount_price,b.repertory,b.author,b.edit_recommend,b.publish_company,b.publish_time,b.prospectus,b.edition,b.print_time,b.author_intro,b.print_number,b.isbn,b.catalog,b.book_size,b.paper_type,b.media_comment,b.pack_type,b.sales_volume
+	    from (select * from m_book order by dbms_random.value) b
+	    where rownum between 1 and 2 -->
+	    select * from m_book order by RAND() limit 2
+	</select>
+	<!-- 查询图书 || 根据时间倒序排序 -->
+	<select id="selectByT" resultType="Book">
+		select id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book order by print_time desc
+	</select>
+	<!-- 查询图书 || 根据销量倒序排序 -->
+	<select id="selectByX" resultType="Book">
+		select id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book  where sales_volume != 0 order by sales_volume desc
+	</select>
+	<!-- 查询图书 || 根据时间销量倒序排序 -->
+	<select id="selectByTX" resultType="Book">
+		select id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,
+		edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from  (select * from m_book order by print_time desc) where sales_volume != 0 order by sales_volume desc
+	</select>
+	<!-- 根据一级二级类别id查询图书 -->
+	<select id="selectByOT" resultType="Book">
+		select * from(
+		select b.id,b.cate_id,b.book_name,b.page_number,b.word_number,b.original_price,b.cover,b.discount_price,b.repertory,b.author,
+		b.edit_recommend,b.publish_company,b.publish_time,b.prospectus,b.edition,
+		b.print_time,b.author_intro,b.print_number,b.isbn,b.catalog,b.book_size,
+		b.paper_type,b.media_comment,b.pack_type,b.sales_volume,
+		rownum rn
+		from m_category c inner join m_book b
+		on c.id = b.cate_id
+		where c.parent_id=#{fid}
+		<if test="sid!=null">
+			and c.id=#{sid}
+		</if>) 
+		where rn between #{begin} and #{end}
+	</select>
+	<!-- 查询图书的数量 -->
+	<select id="selectByBCount" resultType="Integer">
+		select count(*)
+		from m_category c inner join m_book b
+		on c.id = b.cate_id
+		where c.parent_id=#{fid}
+		<if test="sid!=null">
+			and c.id=#{sid}
+		</if>
+	</select>
+	<!-- 根据图书id查询图书信息 -->
+	<select id="selectOneB" resultType="Book">
+		select id,cate_id,book_name,page_number,word_number,original_price,cover,discount_price,repertory,author,edit_recommend,publish_company,publish_time,prospectus,edition,print_time,author_intro,print_number,isbn,catalog,book_size,paper_type,media_comment,pack_type,sales_volume
+		from m_book where id=#{id}
+	</select>
+</mapper>

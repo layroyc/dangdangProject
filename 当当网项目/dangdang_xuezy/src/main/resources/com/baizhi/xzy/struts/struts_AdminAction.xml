@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<package name="admin" extends="struts-default" namespace="/admin">
+		<action name="LoginAction" class="com.baizhi.xzy.action.AdminAction" method="LoginAction">
+			<result name="main">/back/main/main.jsp</result>
+			<result name="login" >/back/login.jsp</result>
+		</action>
+		<!-- 配置验证码 -->
+		<action name="YanZhengMa" class="com.baizhi.xzy.action.YanZhengMa" method="execute"></action>
+	</package>
+</struts>

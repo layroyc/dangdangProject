@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<package name="main" extends="struts-default" namespace="/main">
+		<!--查询所有类别 -->
+		<action name="findAllC" class="com.baizhi.xzy.action.MainAction" method="findAllC">
+			<result name="findAllC">/front/main/main.jsp</result>
+		</action>
+		<!-- 根据一级类别id查询所有一级类别对应的所有二级类别、图书-->
+		<action name="findByFid" class="com.baizhi.xzy.action.MainAction" method="findByFid">
+			<result name="findByFid" >/front/main/book_list.jsp</result>
+		</action>
+		<!-- 根据图书id查询图书信息 -->
+		<action name="selectOneB" class="com.baizhi.xzy.action.MainAction" method="selectOneB">
+			<result name="selectOneB" >/front/main/book_detail.jsp</result>
+		</action>
+	</package>
+</struts>

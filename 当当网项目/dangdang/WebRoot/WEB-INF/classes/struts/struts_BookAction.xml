@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<package name="book" extends="struts-default" namespace="/book">
+		<!-- 查找所有图书信息 -->
+		<action name="findAllB" class="com.hp.action.BookAction" method="findAllB">
+			<result name="findAllB">/back/book/show.jsp</result>
+		</action>
+		<!-- 添加图书 -->
+		<action name="AddBook" class="com.hp.action.BookAction" method="AddBook">
+			<!-- 添加图书成功 -->
+			<result name="findAllB" type="redirectAction">findAllB</result>
+			<!-- 添加图书失败 -->
+			<result name="saveError" type="redirect">/back/book/add.jsp</result>
+		</action>
+		<!-- 模糊查询 -->
+		<action name="selectLikeB" class="com.hp.action.BookAction" method="selectLikeB">
+			<result name="findAllB">/back/book/show.jsp</result>
+		</action>
+		<!-- 删除图书 -->
+		<action name="deleteB" class="com.hp.action.BookAction" method="deleteB">
+			<result name="findAllB" type="redirectAction">findAllB</result>
+		</action>
+		<!-- 修改图书，跳转到查询所有 -->
+		<action name="updateB" class="com.hp.action.BookAction" method="updateB">
+			<result name="findAllB" type="redirectAction">findAllB</result>
+		</action>
+		<!-- 根据id获取图书，跳转到查询所有二级类别 -->
+		<action name="findbyId" class="com.hp.action.BookAction"  method="findbyId">
+			<result name="updateB">/back/book/update.jsp</result>
+		</action>
+	</package>
+</struts>

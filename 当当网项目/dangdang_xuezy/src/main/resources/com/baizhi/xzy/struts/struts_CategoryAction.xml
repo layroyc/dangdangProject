@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<!-- 管理类别 -->
+	<package name="category" extends="struts-default" namespace="/category">
+	<!-- 前端 -->
+	    <!-- 查询所有类别，跳转到展示所有页面 -->
+		<action name="queryAll" class="com.baizhi.xzy.action.CategoryAction" method="queryAll">
+			<result name="queryAll" >/back/category/show.jsp</result>
+		</action>
+		<!-- 查询所有一级类别 ,跳转到添加二级展示页面-->
+		<action name="queryOneCg" class="com.baizhi.xzy.action.CategoryAction" method="queryOneCg">
+			<result name="queryOneCg">/back/category/add-second.jspw</result>
+		</action>
+		<!-- 添加类别，跳转到查询所有类别的Action -->
+		<action name="addcategory" class="com.baizhi.xzy.action.CategoryAction" method="addcategory">
+			<result name="addcategory" type="redirectAction">queryAll</result>
+		</action>
+		<!-- 删除类别，跳转到查询所有类别的Action -->
+		<action name="removeCg" class="com.baizhi.xzy.action.CategoryAction" method="removeCg">
+			<result name="queryAll" type="redirectAction">queryAll</result>
+		</action>
+		<!-- 查询所有二级类别 -->
+		<action name="queryTwoCg" class="com.baizhi.xzy.action.CategoryAction" method="queryTwoCg">
+			<result name="queryTwoCg" type="dispatcher">/back/book/add.jsp</result>
+		</action>
+	<!-- 后端 -->
+		<!-- 查询所有类别，跳转到展示所有页面 -->
+		<action name="FindAllC" class="com.baizhi.xzy.action.CategoryAction" method="FindAllC">
+			<result name="FindAllC" >/front/main/main.jsp</result>
+		</action>
+	</package>
+</struts>

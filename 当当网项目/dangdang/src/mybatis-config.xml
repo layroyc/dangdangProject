@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<!-- 引入配置文件 -->
+	<properties resource="/mysql_jdbc.properties"></properties>
+	
+	<!-- 实体类起别名 -->
+	<typeAliases>
+		<package name="com.hp.entity"/>
+	</typeAliases>
+	
+	<!-- 配置Mybatis的数据库运行环境 -->
+	<environments default="mysql">
+		<environment id="mysql">
+			<!-- 配置事务管理方式：采用JDBC的方式管理事务 -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 数据源的配置 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"></property>
+				<property name="url" value="${url}"></property>
+				<property name="username" value="${username}"></property>
+				<property name="password" value="${password}"></property>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 注册mapper文件的位置 -->
+	<mappers>
+		<mapper resource="com/hp/dao/AdminDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/CategoryDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/BookDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/UserDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/AddressDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/OrderDaoMapper.xml"></mapper>
+		<mapper resource="com/hp/dao/ItemDaoMapper.xml"></mapper>
+	</mappers>
+</configuration>

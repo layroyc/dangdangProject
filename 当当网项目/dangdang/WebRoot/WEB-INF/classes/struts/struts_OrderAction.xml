@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+	<!-- 订单 -->
+	<package name="order" extends="struts-default" namespace="/order">
+		<!-- 地址确定后生成订单 -->
+		<action name="addOI" class="com.hp.action.OrderAction" method="addOI">
+			<result name="addOI">/front/order/order_ok.jsp</result>
+		</action>
+		<!-- 后台：查询所有订单 -->
+		<action name="findAllO" class="com.hp.action.OrderAction" method="findAllO">
+			<result name="findAllO">/back/order/show.jsp</result>
+		</action>
+		
+		<!-- 后台：根据订单id查询所有订单项 -->
+		<action name="FindAllI" class="com.hp.action.OrderAction" method="FindAllI">
+			<result name="FindAllI">/back/order/detail.jsp</result>
+		</action>
+	</package>
+</struts>

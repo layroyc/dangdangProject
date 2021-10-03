@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.xzy.dao.CategoryDao">
+	<resultMap type="Category" id="CMap">
+		<id column="mid1" property="id" />
+		<result column="mcategory1" property="category" />
+		<result column="mlevels" property="levels" />
+		<association property="categorys" javaType="Category">
+			<id column="mid1" property="id" />
+			<result column="mcategory2" property="category" />
+		</association>
+	</resultMap>
+	<!-- 查询所有类别 -->
+	<select id="queryAll" resultMap="CMap">
+		select m1.id as mid1,m1.category as mcategory1,m2.category as
+		mcategory2,m1.levels as mlevels
+		from m_category m1 left join m_category m2 on m1.parent_id=m2.id
+	</select>
+	<!-- 查询所有一级类别名 -->
+	<select id="queryOneCg" resultType="Category">
+		select id,category,levels,parent_id from m_category where parent_id ='null'
+	</select>
+	<!-- 添加类别名 -->
+	<insert id="add">
+		insert into m_category
+		values(#{id},#{category},#{levels},#{parent_id,jdbcType=VARCHAR})
+	</insert>
+	<!-- 删除类别 -->
+	<delete id="deleteCg">
+		delete from m_category where id=#{id}
+	</delete>
+	<!-- 根据一级类别查找二级类别 -->
+	<select id="queryTwoCg" resultType="Category">
+		select category from m_category where parent_id=#{id}
+	</select>
+	<!-- 根据id查找类别 -->
+	<select id="selectById" resultType="Category">
+		select * from m_category where id=#{id}
+	</select>
+	<!-- 查询所有二级类别 -->
+	<select id="queryTwoCgs" resultType="Category">
+		select * from m_category where levels =2
+	</select>
+
+	<!-- 前台 -->
+	<resultMap type="Category" id="cateMaps">
+		<id column="mid1" property="id"/>
+		<result column="mcategory1" property="category"/>
+		<result column="mlevels1" property="levels"/>
+		<result column="parent_id1" property="parent_id"/>
+		<collection property="cates" javaType="list" ofType="Category">
+			<id column="mid2" property="id"/>
+			<result column="mcategory2" property="category"/>
+			<result column="mlevels2" property="levels"/>
+			<result column="parent_id2" property="parent_id"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 查询所有类别 -->
+	<select id="queryAllC" resultMap="cateMaps">
+	   select m1.id as mid1,m1.category as mcategory1,m1.levels as mlevels1,m1.parent_id as parent_id1,
+		       m2.id as mid2,m2.category as mcategory2,m2.levels as mlevels2,m2.parent_id as parent_id2
+		from m_category m1  join m_category m2 on m1.id=m2.parent_id 
+	</select>
+	<!-- 根据一级类别id查询所有一级类别及下面的二级类别 -->
+	<select id="queryByFid" resultMap="cateMaps">
+		select m1.id as mid1,m1.category as mcategory1,m1.levels as mlevels1,m1.parent_id as parent_id1,
+		       m2.id as mid2,m2.category as mcategory2,m2.levels as mlevels2,m2.parent_id as parent_id2
+		from m_category m1 join m_category m2 on m1.id = m2.parent_id
+		where m1.id=#{fid}
+	</select>
+	<!-- 根据类别id查询图书 -->
+	<select id="selectByCid" resultType="Book">
+		select *
+		from m_book where cate_id=#{cid}
+	</select>
+	<!-- 根据图书cate_id查询图书所属类别 -->
+	<select id="queryCate" resultMap="cateMaps">
+		select m1.category as mcategory1,m2.category as mcategory2
+		from (m_category m1 inner join m_category m2 on m1.id=m2.parent_id) 
+		join m_book b on b.cate_id=m2.id
+		where b.id=#{id}
+	</select>
+</mapper>

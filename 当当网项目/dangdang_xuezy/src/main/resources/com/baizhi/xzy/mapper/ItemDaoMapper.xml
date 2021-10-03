@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.xzy.dao.ItemDao">
+	<!-- 添加购物项 -->
+	<insert id="insertI">
+		insert into d_item values(#{id},#{book_name},#{discount_price},#{count},#{priceTotal},#{book_id},#{order_id},#{cover},#{status},#{original_price})
+	</insert>
+	<!--后台：根据订单id查询每一个购物项||order_id  -->
+	<select id="selectAllI" resultType="Item">
+		select *
+		from d_item
+		where order_id=#{oid}
+	</select>
+</mapper>

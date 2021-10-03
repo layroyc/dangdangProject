@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd" >
+<struts>
+ 	<include file="com/baizhi/xzy/struts/struts_OrderAction.xml"/> 
+	<package name="address" extends="struts-default" namespace="/address">
+		<interceptors>
+			<interceptor name="MyUserInterceptor" class="com.baizhi.xzy.interceptor.UserInterceptor"></interceptor>
+			<interceptor-stack name="UserStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="MyUserInterceptor"/>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="userLogin" >/front/user/login_form.jsp</result>
+		</global-results>
+		
+		<!-- 前台: 查询所有的地址-->
+		<action name="queryAll" class="com.baizhi.xzy.action.AddressAction" method="queryAll">
+			<interceptor-ref name="UserStack"/>	
+			<result name="queryAll" >/front/order/address_form.jsp</result>
+		</action>
+		<!-- 前台: 回显地址-->
+		<action name="queryById" class="com.baizhi.xzy.action.AddressAction" method="queryById">
+			<interceptor-ref name="UserStack"/>	
+			<result name="queryById" >/front/order/address_form.jsp</result>
+		</action>
+		
+	 	<!-- 添加修改地址-->
+		<action name="addAndUpdateA" class="com.baizhi.xzy.action.AddressAction" method="addAndUpdateA">
+			<interceptor-ref name="UserStack"/> 
+			<result name="addAndUpdateA" type="redirectAction">
+				<param name="namespace">/order</param>
+				<param name="actionName">addOI</param>
+			</result>
+		</action> 
+	</package>
+</struts>

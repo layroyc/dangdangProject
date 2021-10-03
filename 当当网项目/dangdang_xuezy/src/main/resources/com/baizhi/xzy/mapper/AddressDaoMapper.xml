@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.xzy.dao.AddressDao">
+	<!-- 根据用户id查询所有地址-->
+	<select id="selectAllA" resultType="Address">
+		select id,zip,name,address,telphone,u_id from q_address where u_id=#{uid}
+	</select>
+	<!-- 根据地址id查询详细地址 -->
+	<select id="selectById" resultType="Address">
+  		select id,zip,name,address,telphone,u_id from q_address where id=#{id}
+  	</select>
+  	<!-- 添加地址 -->
+  	<insert id="insertA">
+  		insert into q_address values(#{id},#{zip},#{name},#{address},#{telphone},#{u_id})
+	</insert>
+	<!-- 修改地址 -->
+	<update id="updateA">
+				update q_address
+		<set>
+			<if test="zip!=null">zip=#{zip},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="address!=null">address=#{address},</if>
+			<if test="telphone!=null">telphone=#{telphone}</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

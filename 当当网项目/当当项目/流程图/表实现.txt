@@ -1,0 +1,12 @@
+CREATE TABLE dang (
+id  int NOT NULL AUTO_INCREMENT ,
+num  int NOT NULL ,
+price  double NOT NULL ,
+status  varchar(20) NOT NULL ,
+person varchar(20) NOT NULL ,
+address  varchar(36) NOT NULL ,
+data varchar(36) NOT NULL ,
+havior  varchar(30) NOT NULL ,
+PRIMARY KEY (id)
+)
+;
